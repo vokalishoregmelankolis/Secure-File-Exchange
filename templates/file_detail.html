@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block title %}File Details - SECURE VAULT{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- FILE DETAILS SECTION -->
+            <div class="valorant-section-card">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fas fa-file-shield"></i>
+                        <span>FILE DETAILS</span>
+                        <span class="section-subtitle">CLASSIFIED DOCUMENT</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h3 style="color: var(--text-primary); font-weight: 600; margin-bottom: 2rem;">{{ file.original_filename }}</h3>
+                    
+                    <div class="valorant-detail-table">
+                        <div class="detail-row">
+                            <div class="detail-label">
+                                <i class="fas fa-fingerprint"></i>
+                                FILE ID
+                            </div>
+                            <div class="detail-value">
+                                <code class="valorant-code">{{ file.file_id }}</code>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">
+                                <i class="fas fa-file-alt"></i>
+                                ORIGINAL FILENAME
+                            </div>
+                            <div class="detail-value">{{ file.original_filename }}</div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">
+                                <i class="fas fa-tag"></i>
+                                FILE TYPE
+                            </div>
+                            <div class="detail-value">
+                                <span class="valorant-badge valorant-badge-type">{{ file.file_type.upper() }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">
+                                <i class="fas fa-shield-alt"></i>
+                                ENCRYPTION ALGORITHM
+                            </div>
+                            <div class="detail-value">
+                                <span class="valorant-badge valorant-badge-{{ 'secure' if file.algorithm == 'AES' else 'standard' if file.algorithm == 'DES' else 'basic' }}">
+                                    {{ file.algorithm }}
+                                </span>
+                                <span class="detail-description">
+                                    {% if file.algorithm == 'AES' %}
+                                        (AES-256 CBC Mode)
+                                    {% elif file.algorithm == 'DES' %}
+                                        (DES CBC Mode)
+                                    {% elif file.algorithm == 'RC4' %}
+                                        (RC4 Stream Cipher)
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">
+                                <i class="fas fa-hdd"></i>
+                                FILE SIZE
+                            </div>
+                            <div class="detail-value">{{ format_size(file.file_size) }}</div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">
+                                <i class="fas fa-user"></i>
+                                OWNER
+                            </div>
+                            <div class="detail-value">{{ file.owner.username }}</div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">
+                                <i class="fas fa-calendar"></i>
+                                UPLOAD DATE
+                            </div>
+                            <div class="detail-value">{{ file.uploaded_at.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">
+                                <i class="fas fa-shield-check"></i>
+                                ENCRYPTION STATUS
+                            </div>
+                            <div class="detail-value">
+                                <span class="valorant-badge valorant-badge-secure">
+                                    <i class="fas fa-shield-check"></i> 
+                                    ENCRYPTED
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="valorant-actions">
+                    <a href="{{ url_for('main.download_file', file_id=file.file_id) }}" class="valorant-action-btn valorant-btn-success">
+                        <i class="fas fa-download"></i>
+                        DOWNLOAD & DECRYPT
+                    </a>
+                    {% if file.user_id == current_user.id %}
+                        <a href="{{ url_for('main.share_file', file_id=file.file_id) }}" class="valorant-action-btn valorant-btn-warning">
+                            <i class="fas fa-share"></i>
+                            SHARE FILE
+                        </a>
+                        <form method="POST" action="{{ url_for('main.delete_file', file_id=file.file_id) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this file?');">
+                            <button type="submit" class="valorant-action-btn valorant-btn-danger">
+                                <i class="fas fa-trash"></i>
+                                DELETE
+                            </button>
+                        </form>
+                    {% endif %}
+                    <a href="{{ url_for('main.dashboard') }}" class="valorant-action-btn valorant-btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        BACK TO DASHBOARD
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        {% if financial_report %}
+        <div class="valorant-section-card mt-4">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    DECRYPTED FINANCIAL REPORT DATA
+                    <span class="section-subtitle">CLASSIFIED FINANCIAL INTELLIGENCE</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="valorant-alert valorant-alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    <strong>CONFIDENTIAL INFORMATION</strong> - Handle with care
+                </div>
+                
+                <h6 class="valorant-section-subtitle mt-4">
+                    <i class="fas fa-building"></i>
+                    COMPANY INFORMATION
+                </h6>
+                <div class="valorant-detail-table">
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-building"></i>
+                            COMPANY NAME
+                        </div>
+                        <div class="detail-value">{{ financial_report.company_name }}</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-calendar-alt"></i>
+                            REPORT PERIOD
+                        </div>
+                        <div class="detail-value">{{ financial_report.report_period }}</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-sitemap"></i>
+                            DEPARTMENT
+                        </div>
+                        <div class="detail-value">{{ financial_report.department }}</div>
+                    </div>
+                </div>
+                
+                <h6 class="valorant-section-subtitle mt-4">
+                    <i class="fas fa-chart-line"></i>
+                    REVENUE SUMMARY
+                </h6>
+                <div class="valorant-detail-table">
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-dollar-sign"></i>
+                            TOTAL REVENUE
+                        </div>
+                        <div class="detail-value valorant-money">${{ financial_report.total_revenue }}</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-credit-card"></i>
+                            TOTAL EXPENSES
+                        </div>
+                        <div class="detail-value valorant-money">${{ financial_report.total_expenses }}</div>
+                    </div>
+                    
+                    <div class="detail-row detail-row-highlight">
+                        <div class="detail-label">
+                            <i class="fas fa-trophy"></i>
+                            NET PROFIT
+                        </div>
+                        <div class="detail-value valorant-money valorant-profit">${{ financial_report.net_profit }}</div>
+                    </div>
+                </div>
+                
+                <h6 class="valorant-section-subtitle mt-4">
+                    <i class="fas fa-chart-pie"></i>
+                    BUDGET ANALYSIS
+                </h6>
+                <div class="valorant-detail-table">
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-wallet"></i>
+                            BUDGET ALLOCATED
+                        </div>
+                        <div class="detail-value valorant-money">${{ financial_report.budget_allocated }}</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">
+                            <i class="fas fa-shopping-cart"></i>
+                            BUDGET SPENT
+                        </div>
+                        <div class="detail-value valorant-money">${{ financial_report.budget_spent }}</div>
+                    </div>
+                    
+                    <div class="detail-row detail-row-highlight">
+                        <div class="detail-label">
+                            <i class="fas fa-balance-scale"></i>
+                            VARIANCE
+                        </div>
+                        <div class="detail-value valorant-money valorant-variance">${{ financial_report.variance }}</div>
+                    </div>
+                </div>
+                
+                {% if financial_report.notes %}
+                <h6 class="valorant-section-subtitle mt-4">
+                    <i class="fas fa-sticky-note"></i>
+                    NOTES
+                </h6>
+                <div class="valorant-alert valorant-alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    {{ financial_report.notes }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if metrics %}
+        <div class="valorant-section-card mt-4">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-tachometer-alt"></i>
+                    PERFORMANCE METRICS
+                    <span class="section-subtitle">SYSTEM PERFORMANCE ANALYSIS</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="valorant-table-container">
+                    <table class="valorant-table">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-shield-alt"></i> Algorithm</th>
+                                <th><i class="fas fa-cogs"></i> Operation</th>
+                                <th><i class="fas fa-database"></i> Data Type</th>
+                                <th><i class="fas fa-clock"></i> Execution Time</th>
+                                <th><i class="fas fa-download"></i> Input Size</th>
+                                <th><i class="fas fa-upload"></i> Output Size</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for metric in metrics %}
+                            <tr>
+                                <td>
+                                    <span class="valorant-badge valorant-badge-{{ 'secure' if metric.algorithm == 'AES' else 'standard' if metric.algorithm == 'DES' else 'basic' }}">
+                                        {{ metric.algorithm }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="valorant-badge valorant-badge-{{ 'success' if metric.operation == 'encryption' else 'danger' }}">
+                                        {{ metric.operation.upper() }}
+                                    </span>
+                                </td>
+                                <td>{{ metric.data_type }}</td>
+                                <td class="valorant-time">{{ format_time(metric.execution_time) }}</td>
+                                <td class="valorant-size">{{ format_size(metric.input_size) }}</td>
+                                <td class="valorant-size">{{ format_size(metric.output_size) }}</td>
+                                <td class="valorant-timestamp">{{ metric.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-lg-4">
+        {% if file.user_id == current_user.id and shared_with %}
+        <div class="valorant-section-card">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-users"></i>
+                    SHARED WITH
+                    <span class="section-subtitle">ACCESS CONTROL LIST</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <div class="valorant-user-list">
+                    {% for user in shared_with %}
+                    <div class="valorant-user-item">
+                        <div class="user-info">
+                            <i class="fas fa-user"></i>
+                            <span class="username">{{ user.username }}</span>
+                        </div>
+                        <span class="valorant-badge valorant-badge-success">
+                            <i class="fas fa-check"></i>
+                            ACCESS GRANTED
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="valorant-section-card mt-4">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-shield-alt"></i>
+                    SECURITY INFORMATION
+                    <span class="section-subtitle">ENCRYPTION PROTOCOL DETAILS</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <h6 class="valorant-section-subtitle">
+                    <i class="fas fa-lock"></i>
+                    ENCRYPTION DETAILS
+                </h6>
+                <div class="valorant-security-list">
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>File encrypted at rest</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Secure key storage</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>CBC mode (non-ECB)</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Access controlled</span>
+                    </div>
+                </div>
+                
+                <div class="valorant-alert valorant-alert-info mt-3">
+                    <i class="fas fa-info-circle"></i>
+                    <small>
+                        Keys are stored securely in the database. 
+                        In production, use a proper key management system (KMS).
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

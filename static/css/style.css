@@ -1,0 +1,2134 @@
+/* VALORANT AUTHENTIC STYLING - SECURE VAULT SYSTEM */
+@import url('https://fonts.googleapis.com/css2?family=Tungsten:wght@400;500;600;700&family=Mark+Pro:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    /* VALORANT AUTHENTIC COLORS */
+    --valorant-red: #ff4654;
+    --valorant-teal: #0f1b1c;
+    --valorant-dark-teal: #0a1315;
+    --valorant-bg-primary: #0f1419;
+    --valorant-bg-secondary: #1e2328;
+    --valorant-accent-blue: #00f5ff;
+    --valorant-gold: #ff7b00;
+    --valorant-green: #46c93a;
+    
+    /* TEXT COLORS */
+    --text-primary: #ffffff;
+    --text-secondary: #ece8e1;
+    --text-tertiary: #9ca0a5;
+    --text-valorant: #ff4654;
+    
+    /* SPACING & EFFECTS */
+    --border-radius: 3px;
+    --transition: all 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--valorant-teal);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+}
+
+/* VALORANT AUTHENTIC BACKGROUND */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(135deg, var(--valorant-teal) 0%, var(--valorant-dark-teal) 100%),
+        radial-gradient(ellipse at top right, rgba(255, 70, 84, 0.05) 0%, transparent 70%),
+        radial-gradient(ellipse at bottom left, rgba(0, 245, 255, 0.05) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+main {
+    flex: 1;
+}
+
+/* VALORANT AUTHENTIC NAVBAR */
+.navbar {
+    background: var(--valorant-bg-primary) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.navbar-brand {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--text-primary) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-brand i {
+    color: var(--valorant-red);
+    font-size: 20px;
+}
+
+.navbar-brand:hover {
+    color: var(--valorant-accent) !important;
+    text-shadow: 0 0 30px var(--valorant-accent);
+    transform: scale(1.05);
+}
+
+.navbar-brand i {
+    margin-right: 8px;
+    color: var(--valorant-red);
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-secondary) !important;
+    margin: 0 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    transition: var(--transition);
+    padding: 12px 16px !important;
+    border-radius: var(--border-radius);
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--text-primary) !important;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--valorant-red) !important;
+    background: rgba(255, 70, 84, 0.1);
+    border-color: var(--valorant-red);
+}
+
+/* VALORANT CARDS */
+.card {
+    background: rgba(30, 35, 40, 0.8);
+    border: 1px solid var(--valorant-accent);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--valorant-red), var(--valorant-blue), var(--valorant-accent));
+    background-size: 300% 100%;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -300% 0; }
+    100% { background-position: 300% 0; }
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(83, 232, 255, 0.3);
+    border-color: var(--valorant-blue);
+}
+
+.card-header {
+    background: rgba(15, 20, 25, 0.5);
+    border-bottom: 1px solid var(--valorant-accent);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-body {
+    color: var(--text-secondary);
+}
+
+/* VALORANT AUTHENTIC BUTTONS */
+.btn {
+    border: 2px solid;
+    color: var(--text-primary);
+    padding: 12px 24px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: var(--valorant-red);
+    border-color: var(--valorant-red);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: var(--valorant-red);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+    background: var(--text-secondary);
+    color: var(--valorant-teal);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    background: transparent;
+    border-color: var(--valorant-red);
+    color: var(--valorant-red);
+}
+
+.btn-outline-primary:hover {
+    background: var(--valorant-red);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background: var(--valorant-green);
+    border-color: var(--valorant-green);
+    color: white;
+}
+
+.btn-success:hover {
+    background: transparent;
+    color: var(--valorant-green);
+    transform: translateY(-2px);
+}
+
+.btn-sm {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+/* VALORANT TABLES */
+.table {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.table th {
+    background: rgba(15, 20, 25, 0.8);
+    border-color: var(--valorant-accent);
+    color: var(--text-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px;
+}
+
+.table td {
+    border-color: var(--valorant-light);
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background: rgba(83, 232, 255, 0.1);
+}
+
+/* VALORANT BADGES */
+.badge {
+    padding: 0.4em 0.8em;
+    font-weight: 500;
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.badge-primary {
+    background: var(--valorant-blue);
+    color: var(--text-primary);
+}
+
+.badge-danger {
+    background: var(--valorant-red);
+    color: var(--text-primary);
+}
+
+.badge-success {
+    background: var(--valorant-green);
+    color: var(--text-primary);
+}
+
+/* HERO SECTION (JUMBOTRON REPLACEMENT) */
+.jumbotron, .hero-section {
+    background: linear-gradient(45deg, var(--valorant-darker), var(--valorant-dark));
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.jumbotron::before, .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2353e8ff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.jumbotron h1, .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--valorant-red), var(--valorant-blue), var(--valorant-accent));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    text-shadow: 0 0 40px rgba(255, 70, 84, 0.5);
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* VALORANT FILE UPLOAD */
+.file-upload-area {
+    border: 2px dashed var(--valorant-accent);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    background: rgba(30, 35, 40, 0.3);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.file-upload-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--valorant-blue), var(--valorant-accent));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.file-upload-area:hover {
+    border-color: var(--valorant-blue);
+    background: rgba(83, 232, 255, 0.1);
+    box-shadow: 0 0 30px rgba(83, 232, 255, 0.2);
+}
+
+.file-upload-area:hover::before {
+    opacity: 0.05;
+}
+
+/* VALORANT ALERTS */
+.alert {
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--valorant-green);
+    border-left-color: var(--valorant-green);
+}
+
+.alert-danger {
+    background: rgba(255, 70, 84, 0.1);
+    color: var(--valorant-red);
+    border-left-color: var(--valorant-red);
+}
+
+.alert-info {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--valorant-blue);
+    border-left-color: var(--valorant-blue);
+}
+
+.alert-warning {
+    background: rgba(240, 185, 11, 0.1);
+    color: var(--valorant-gold);
+    border-left-color: var(--valorant-gold);
+}
+
+.alert i {
+    margin-right: 8px;
+}
+
+/* VALORANT FOOTER */
+footer {
+    margin-top: auto;
+    background: rgba(10, 14, 19, 0.9);
+    border-top: 1px solid var(--valorant-accent);
+    color: var(--text-muted);
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* VALORANT AUTHENTIC FORMS */
+.form-control, .form-select {
+    background: var(--valorant-bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    transition: var(--transition);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.form-control:focus, .form-select:focus {
+    background: var(--valorant-bg-secondary);
+    border-color: var(--valorant-red);
+    box-shadow: 0 0 0 2px rgba(255, 70, 84, 0.2);
+    color: var(--text-primary);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--text-tertiary);
+    opacity: 0.7;
+}
+
+.form-label {
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+/* VALORANT LOADING SPINNER */
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.spinner-border {
+    color: var(--valorant-blue);
+}
+
+/* VALORANT ANIMATIONS */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* VALORANT SECURITY INDICATORS */
+.security-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    box-shadow: 0 0 10px currentColor;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.security-indicator.high {
+    background-color: var(--valorant-green);
+    color: var(--valorant-green);
+}
+
+.security-indicator.medium {
+    background-color: var(--valorant-gold);
+    color: var(--valorant-gold);
+}
+
+.security-indicator.low {
+    background-color: var(--valorant-red);
+    color: var(--valorant-red);
+}
+
+/* VALORANT FILE TYPE ICONS */
+.file-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--valorant-accent);
+    text-shadow: 0 0 15px var(--valorant-accent);
+}
+
+/* VALORANT AUTHENTIC STAT CARDS */
+.valorant-stat-card {
+    background: var(--valorant-bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.valorant-stat-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.stat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.stat-header i {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.stat-number {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 8px;
+    font-family: 'Inter', sans-serif;
+}
+
+.stat-description {
+    color: var(--text-tertiary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+/* VALORANT SECTION CARDS */
+.valorant-section-card {
+    background: var(--valorant-bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    background: linear-gradient(135deg, rgba(255, 70, 84, 0.1), rgba(255, 70, 84, 0.05));
+    border-bottom: 1px solid rgba(255, 70, 84, 0.2);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-title i {
+    color: var(--valorant-red);
+    font-size: 18px;
+}
+
+.section-title span:first-of-type {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.section-subtitle {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    background: rgba(255, 70, 84, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 70, 84, 0.2);
+}
+
+.section-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.section-content {
+    padding: 24px;
+}
+
+/* VALORANT TABLE STYLING */
+.valorant-table-container {
+    background: var(--valorant-bg-primary);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.valorant-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.valorant-table thead th {
+    background: linear-gradient(135deg, rgba(255, 70, 84, 0.15), rgba(255, 70, 84, 0.05));
+    color: var(--text-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 16px 12px;
+    border-bottom: 2px solid var(--valorant-red);
+    font-size: 12px;
+    text-align: left;
+}
+
+.valorant-table thead th i {
+    margin-right: 6px;
+    opacity: 0.8;
+}
+
+.valorant-table-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.valorant-table-row:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.valorant-table-row td {
+    padding: 16px 12px;
+    color: var(--text-secondary);
+    vertical-align: middle;
+}
+
+.file-info {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 70, 84, 0.1);
+    border-radius: 6px;
+    color: var(--valorant-red);
+}
+
+.file-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.file-name {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.file-id {
+    color: var(--text-tertiary);
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    margin-top: 2px;
+}
+
+/* VALORANT BADGES */
+.valorant-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid;
+}
+
+.valorant-badge-type {
+    background: rgba(0, 212, 170, 0.1);
+    color: #00d4aa;
+    border-color: rgba(0, 212, 170, 0.3);
+}
+
+.valorant-badge-secure {
+    background: rgba(0, 245, 255, 0.1);
+    color: #00f5ff;
+    border-color: rgba(0, 245, 255, 0.3);
+}
+
+.valorant-badge-standard {
+    background: rgba(255, 214, 10, 0.1);
+    color: #ffd60a;
+    border-color: rgba(255, 214, 10, 0.3);
+}
+
+.valorant-badge-basic {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.data-size, .timestamp {
+    font-family: 'Courier New', monospace;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}
+
+.valorant-action-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.valorant-action-btn i {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.valorant-btn-intel {
+    background: rgba(0, 245, 255, 0.1);
+    color: #00f5ff;
+    border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+.valorant-btn-intel:hover {
+    background: rgba(0, 245, 255, 0.2);
+    color: #00f5ff;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 245, 255, 0.3);
+}
+
+.valorant-btn-download {
+    background: rgba(0, 212, 170, 0.1);
+    color: #00d4aa;
+    border: 1px solid rgba(0, 212, 170, 0.3);
+}
+
+.valorant-btn-download:hover {
+    background: rgba(0, 212, 170, 0.2);
+    color: #00d4aa;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 212, 170, 0.3);
+}
+
+.valorant-btn-share {
+    background: rgba(255, 214, 10, 0.1);
+    color: #ffd60a;
+    border: 1px solid rgba(255, 214, 10, 0.3);
+}
+
+.valorant-btn-share:hover {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+.valorant-btn-delete {
+    background: rgba(255, 70, 84, 0.1);
+    color: var(--valorant-red);
+    border: 1px solid rgba(255, 70, 84, 0.3);
+}
+
+/* Extended action buttons for file detail page */
+.valorant-actions .valorant-action-btn {
+    width: auto;
+    min-width: 140px;
+    height: 44px;
+    padding: 0 16px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-main) 100%);
+    border: 1px solid var(--teal-light);
+}
+
+.valorant-btn-delete:hover {
+    background: rgba(255, 70, 84, 0.2);
+    color: var(--valorant-red);
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 70, 84, 0.3);
+}
+
+/* VALORANT EMPTY STATE */
+.valorant-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--valorant-bg-primary);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.empty-icon {
+    margin-bottom: 1.5rem;
+}
+
+.empty-icon i {
+    font-size: 4rem;
+    color: rgba(255, 70, 84, 0.3);
+}
+
+.empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.empty-message {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* VALORANT AUTHENTICATION PAGES */
+.auth-background {
+    background: linear-gradient(135deg, var(--valorant-bg-primary) 0%, var(--valorant-bg-secondary) 50%, var(--valorant-dark-teal) 100%);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.valorant-auth-container {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.valorant-auth-card {
+    background: rgba(30, 35, 40, 0.95);
+    border: 2px solid rgba(255, 70, 84, 0.2);
+    border-radius: 8px;
+    padding: 2.5rem 2rem;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    box-shadow: 
+        0 0 30px rgba(255, 70, 84, 0.1),
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.auth-icon {
+    margin-bottom: 1rem;
+}
+
+.auth-icon i {
+    font-size: 3rem;
+    color: var(--valorant-red);
+    filter: drop-shadow(0 0 10px rgba(255, 70, 84, 0.5));
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.auth-form-container {
+    margin-bottom: 2rem;
+}
+
+.valorant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.valorant-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.valorant-label {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.valorant-label i {
+    color: var(--valorant-red);
+    opacity: 0.8;
+}
+
+.valorant-input {
+    background: rgba(15, 20, 25, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    padding: 0.875rem 1rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition);
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    font-weight: 400;
+}
+
+.valorant-input::placeholder {
+    color: var(--text-tertiary);
+    opacity: 0.6;
+    font-weight: 400;
+}
+
+.valorant-input:focus {
+    outline: none;
+    border-color: var(--valorant-red);
+    box-shadow: 0 0 0 2px rgba(255, 70, 84, 0.25);
+    background: rgba(15, 20, 25, 0.95);
+    color: var(--text-primary);
+}
+
+.valorant-input-error {
+    border-color: var(--valorant-red) !important;
+    box-shadow: 0 0 0 2px rgba(255, 70, 84, 0.3) !important;
+}
+
+.valorant-error {
+    color: var(--valorant-red);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+}
+
+.auth-actions {
+    margin-top: 1rem;
+}
+
+.btn-auth {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.valorant-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.valorant-btn-primary {
+    background: linear-gradient(135deg, var(--valorant-red), #e63946);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.valorant-btn-primary:hover {
+    background: linear-gradient(135deg, #e63946, var(--valorant-red));
+    box-shadow: 0 0 20px rgba(255, 70, 84, 0.4);
+    transform: translateY(-1px);
+    color: white;
+}
+
+.auth-footer {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+}
+
+.auth-divider {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.auth-divider span {
+    background: var(--valorant-bg-secondary);
+    padding: 0 1rem;
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+.auth-register {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.valorant-link {
+    color: var(--valorant-red);
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.valorant-link:hover {
+    color: #ff6b7a;
+    text-decoration: none;
+}
+
+/* Auth Background Effects */
+.auth-bg-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(255, 70, 84, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 70, 84, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+}
+
+.glow-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 70, 84, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 768px) {
+    .jumbotron, .hero-section {
+        padding: 60px 0;
+    }
+    
+    .jumbotron h1, .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .navbar-nav .nav-link {
+        margin: 0 5px;
+        font-size: 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .metric-value {
+        font-size: 2rem;
+    }
+}
+
+/* GLOW EFFECTS */
+.glow-red {
+    text-shadow: 0 0 10px var(--valorant-red);
+}
+
+.glow-blue {
+    text-shadow: 0 0 10px var(--valorant-blue);
+}
+
+.glow-accent {
+    text-shadow: 0 0 10px var(--valorant-accent);
+}
+
+/* ENHANCED AUTH BACKGROUND */
+.auth-background {
+    background: linear-gradient(135deg, #0f1419 0%, #1e2328 50%, #0d1117 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 70, 84, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* ENHANCED VALORANT LINK STYLING */
+.valorant-link {
+    color: var(--valorant-red) !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    text-shadow: 0 0 5px rgba(255, 70, 84, 0.3);
+}
+
+.valorant-link:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 15px var(--valorant-red), 0 0 25px rgba(255, 70, 84, 0.5);
+    transform: translateY(-1px);
+}
+
+.valorant-link::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--valorant-red), #ff6b7a);
+    transition: width 0.3s ease;
+    box-shadow: 0 0 5px var(--valorant-red);
+}
+
+.valorant-link:hover::before {
+    width: 100%;
+}
+
+/* AUTH SWITCH TEXT ENHANCED */
+.auth-switch {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* TACTICAL DIVIDER SMALL */
+.tactical-divider-small {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.tactical-divider-small .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 70, 84, 0.3) 50%, transparent 100%);
+}
+
+.divider-text {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0 12px;
+    background: var(--valorant-bg-secondary);
+}
+
+/* ERROR MESSAGE STYLING */
+.error-message {
+    color: var(--valorant-red);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.error-message i {
+    font-size: 10px;
+}
+
+/* SCROLLBAR STYLING */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--valorant-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--valorant-accent);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--valorant-blue);
+}
+
+/* =============================================================================
+   FILE DETAIL PAGE STYLES
+   ============================================================================= */
+
+/* Action button variants for file detail */
+.valorant-btn-success {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    border-color: #0d6efd;
+}
+
+.valorant-btn-success:hover {
+    background: linear-gradient(135deg, var(--valorant-red) 0%, #dc3545 100%);
+    border-color: var(--valorant-red);
+}
+
+.valorant-btn-warning {
+    background: linear-gradient(135deg, #fd7e14 0%, #f57c00 100%);
+    border-color: #fd7e14;
+}
+
+.valorant-btn-warning:hover {
+    background: linear-gradient(135deg, var(--valorant-red) 0%, #dc3545 100%);
+    border-color: var(--valorant-red);
+}
+
+.valorant-btn-danger {
+    background: linear-gradient(135deg, var(--valorant-red) 0%, #dc3545 100%);
+    border-color: var(--valorant-red);
+}
+
+.valorant-btn-danger:hover {
+    background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+.valorant-btn-secondary {
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--teal-dark) 100%);
+    border-color: var(--teal-main);
+}
+
+.valorant-btn-secondary:hover {
+    background: linear-gradient(135deg, var(--teal-main) 0%, var(--valorant-red) 100%);
+    border-color: var(--valorant-red);
+}
+
+.valorant-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+/* Detail table styles */
+.valorant-detail-table {
+    background: var(--bg-secondary);
+    border: 1px solid var(--teal-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.detail-row {
+    display: flex;
+    border-bottom: 1px solid var(--teal-dark);
+    transition: all 0.2s ease;
+}
+
+.detail-row:hover {
+    background: rgba(56, 178, 172, 0.05);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row-highlight {
+    background: rgba(255, 70, 84, 0.1);
+    border-color: var(--valorant-red);
+}
+
+.detail-label {
+    flex: 0 0 40%;
+    padding: 1rem;
+    background: var(--teal-dark);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-right: 1px solid var(--teal-main);
+}
+
+.detail-value {
+    flex: 1;
+    padding: 1rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.valorant-code {
+    background: var(--bg-primary);
+    color: var(--valorant-red);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    border: 1px solid var(--teal-dark);
+}
+
+.valorant-money {
+    font-weight: 600;
+    font-size: 1.1em;
+    color: var(--text-primary);
+}
+
+.valorant-profit {
+    color: #28a745;
+}
+
+.valorant-variance {
+    color: var(--valorant-red);
+}
+
+.valorant-time,
+.valorant-size,
+.valorant-timestamp {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+/* Badge variations */
+.valorant-badge-type {
+    background: var(--teal-main);
+    color: var(--bg-primary);
+}
+
+.valorant-badge-secure {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.valorant-badge-standard {
+    background: linear-gradient(135deg, #fd7e14 0%, #f57c00 100%);
+    color: white;
+}
+
+.valorant-badge-basic {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    color: white;
+}
+
+.valorant-badge-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.valorant-badge-danger {
+    background: linear-gradient(135deg, var(--valorant-red) 0%, #dc3545 100%);
+    color: white;
+}
+
+.detail-description {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    margin-left: 8px;
+}
+
+/* Alert styles */
+.valorant-alert {
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid;
+    margin: 1rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.valorant-alert-warning {
+    background: rgba(253, 126, 20, 0.1);
+    border-color: #fd7e14;
+    color: #fd7e14;
+}
+
+.valorant-alert-info {
+    background: rgba(56, 178, 172, 0.1);
+    border-color: var(--teal-main);
+    color: var(--teal-light);
+}
+
+/* User list styles */
+.valorant-user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.valorant-user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--teal-dark);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.valorant-user-item:hover {
+    background: rgba(56, 178, 172, 0.05);
+    border-color: var(--teal-main);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.username {
+    font-size: 0.9rem;
+}
+
+/* Security list styles */
+.valorant-security-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0;
+}
+
+.security-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+}
+
+.security-item i {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+/* =============================================================================
+   PERFORMANCE PAGE STYLES
+   ============================================================================= */
+
+/* Performance description */
+.valorant-description {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+/* Performance metrics table */
+.valorant-overhead-positive {
+    color: var(--valorant-red);
+    font-weight: 600;
+}
+
+.valorant-overhead-neutral {
+    color: var(--text-muted);
+}
+
+/* Performance cards */
+.valorant-performance-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--teal-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.valorant-performance-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--teal-main);
+    transition: all 0.3s ease;
+}
+
+.valorant-card-aes::before {
+    background: linear-gradient(180deg, #28a745 0%, #20c997 100%);
+}
+
+.valorant-card-des::before {
+    background: linear-gradient(180deg, #fd7e14 0%, #f57c00 100%);
+}
+
+.valorant-card-rc4::before {
+    background: linear-gradient(180deg, var(--valorant-red) 0%, #dc3545 100%);
+}
+
+.valorant-performance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--teal-main);
+}
+
+.performance-card-header {
+    padding: 1.5rem 1.25rem 1rem;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--teal-dark) 100%);
+    border-bottom: 1px solid var(--teal-dark);
+    text-align: center;
+}
+
+.algo-icon {
+    margin-bottom: 0.75rem;
+}
+
+.algo-icon i {
+    font-size: 2.5rem;
+    color: var(--teal-light);
+}
+
+.valorant-card-aes .algo-icon i {
+    color: #28a745;
+}
+
+.valorant-card-des .algo-icon i {
+    color: #fd7e14;
+}
+
+.valorant-card-rc4 .algo-icon i {
+    color: var(--valorant-red);
+}
+
+.algo-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0.5rem 0;
+}
+
+.algo-security {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.performance-card-body {
+    padding: 1.25rem;
+}
+
+.performance-metric {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--teal-dark);
+    border-radius: 6px;
+}
+
+.performance-metric:last-child {
+    margin-bottom: 0;
+}
+
+.metric-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--teal-dark);
+}
+
+.metric-header i {
+    font-size: 1rem;
+    color: var(--teal-light);
+}
+
+.metric-header span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.metric-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+.metric-no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 1rem;
+}
+
+.metric-no-data i {
+    font-size: 1.5rem;
+    opacity: 0.5;
+}
+
+/* Analysis alert */
+.valorant-alert .alert-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--teal-main);
+}
+
+.valorant-alert .alert-header i {
+    font-size: 1.3rem;
+    color: var(--teal-light);
+}
+
+.valorant-alert .alert-header h6 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.valorant-analysis-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.analysis-item {
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--teal-dark);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.analysis-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--teal-main);
+    transition: all 0.3s ease;
+}
+
+.analysis-item:nth-child(1)::before {
+    background: linear-gradient(180deg, #28a745 0%, #20c997 100%);
+}
+
+.analysis-item:nth-child(2)::before {
+    background: linear-gradient(180deg, #fd7e14 0%, #f57c00 100%);
+}
+
+.analysis-item:nth-child(3)::before {
+    background: linear-gradient(180deg, var(--valorant-red) 0%, #dc3545 100%);
+}
+
+.analysis-item:nth-child(4)::before {
+    background: linear-gradient(180deg, var(--teal-light) 0%, var(--teal-main) 100%);
+}
+
+.analysis-item:hover {
+    background: rgba(56, 178, 172, 0.08);
+    border-color: var(--teal-main);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.analysis-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--valorant-red);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.analysis-item:nth-child(1) .analysis-label {
+    color: #28a745;
+}
+
+.analysis-item:nth-child(2) .analysis-label {
+    color: #fd7e14;
+}
+
+.analysis-item:nth-child(3) .analysis-label {
+    color: var(--valorant-red);
+}
+
+.analysis-item:nth-child(4) .analysis-label {
+    color: var(--teal-light);
+}
+
+.analysis-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .analysis-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .analysis-label {
+        white-space: normal;
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .valorant-performance-card {
+        margin-bottom: 2rem;
+    }
+    
+    .performance-card-header {
+        padding: 1.25rem 1rem 0.75rem;
+    }
+    
+    .algo-icon i {
+        font-size: 2rem;
+    }
+    
+    .algo-name {
+        font-size: 1.25rem;
+    }
+}
+
+/* =============================================================================
+   PERFORMANCE PAGE STYLES
+   ============================================================================= */
+
+.valorant-description {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Performance metrics table specific */
+.valorant-overhead {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+}
+
+.valorant-overhead-positive {
+    color: var(--valorant-red);
+}
+
+.valorant-overhead-neutral {
+    color: #28a745;
+}
+
+/* Performance card styles */
+.valorant-performance-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--teal-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.valorant-performance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(56, 178, 172, 0.15);
+    border-color: var(--teal-main);
+}
+
+.valorant-card-aes {
+    border-left: 4px solid #28a745;
+}
+
+.valorant-card-des {
+    border-left: 4px solid #fd7e14;
+}
+
+.valorant-card-rc4 {
+    border-left: 4px solid #6c757d;
+}
+
+.performance-card-header {
+    background: var(--teal-dark);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--teal-main);
+}
+
+.algo-icon {
+    margin-bottom: 0.5rem;
+}
+
+.algo-icon i {
+    font-size: 2rem;
+    color: var(--valorant-red);
+}
+
+.algo-name {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.algo-security {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+}
+
+.performance-card-body {
+    padding: 1.5rem;
+}
+
+.performance-metric {
+    margin-bottom: 1.5rem;
+}
+
+.performance-metric:last-child {
+    margin-bottom: 0;
+}
+
+.metric-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--teal-light);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--teal-dark);
+}
+
+.metric-header i {
+    font-size: 1rem;
+}
+
+.metric-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0;
+}
+
+.metric-label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.metric-value {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.metric-no-data {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 1rem 0;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Analysis section styles */
+.valorant-alert .alert-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.valorant-alert .alert-header h6 {
+    margin: 0;
+    color: var(--teal-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.valorant-analysis-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.analysis-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    background: rgba(56, 178, 172, 0.05);
+    border: 1px solid var(--teal-dark);
+    border-radius: 4px;
+}
+
+.analysis-label {
+    color: var(--valorant-red);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.analysis-desc {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}

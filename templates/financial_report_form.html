@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Create Financial Report - Secure File Exchange System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-file-earmark-text"></i> Create Financial Report</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> <strong>Confidential Information</strong> - All data will be encrypted before storage.
+                </div>
+                
+                <form method="POST" action="{{ url_for('main.financial_report') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <h5 class="mt-3 mb-3 border-bottom pb-2">Company Information</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            {{ form.company_name.label(class="form-label") }}
+                            {{ form.company_name(class="form-control " + ("is-invalid" if form.company_name.errors else "")) }}
+                            {% if form.company_name.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.company_name.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.report_period.label(class="form-label") }}
+                            {{ form.report_period(class="form-control " + ("is-invalid" if form.report_period.errors else ""), placeholder="e.g., Q1 2024") }}
+                            {% if form.report_period.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.report_period.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.department.label(class="form-label") }}
+                            {{ form.department(class="form-control " + ("is-invalid" if form.department.errors else "")) }}
+                            {% if form.department.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.department.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3 border-bottom pb-2">Revenue Summary</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            {{ form.total_revenue.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.total_revenue(class="form-control " + ("is-invalid" if form.total_revenue.errors else ""), step="0.01") }}
+                            </div>
+                            {% if form.total_revenue.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.total_revenue.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.total_expenses.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.total_expenses(class="form-control " + ("is-invalid" if form.total_expenses.errors else ""), step="0.01") }}
+                            </div>
+                            {% if form.total_expenses.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.total_expenses.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.net_profit.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.net_profit(class="form-control", step="0.01", readonly=True) }}
+                            </div>
+                            <small class="form-text text-muted">Auto-calculated: Revenue - Expenses</small>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3 border-bottom pb-2">Budget Analysis</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            {{ form.budget_allocated.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.budget_allocated(class="form-control " + ("is-invalid" if form.budget_allocated.errors else ""), step="0.01") }}
+                            </div>
+                            {% if form.budget_allocated.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.budget_allocated.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.budget_spent.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.budget_spent(class="form-control " + ("is-invalid" if form.budget_spent.errors else ""), step="0.01") }}
+                            </div>
+                            {% if form.budget_spent.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.budget_spent.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.variance.label(class="form-label") }}
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.variance(class="form-control", step="0.01", readonly=True) }}
+                            </div>
+                            <small class="form-text text-muted">Auto-calculated: Allocated - Spent</small>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3 border-bottom pb-2">Additional Information</h5>
+                    <div class="mb-3">
+                        {{ form.notes.label(class="form-label") }}
+                        {{ form.notes(class="form-control", rows="4", placeholder="Add any additional notes or comments...") }}
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3 border-bottom pb-2">Encryption Settings</h5>
+                    <div class="mb-4">
+                        {{ form.algorithm.label(class="form-label") }}
+                        {{ form.algorithm(class="form-select " + ("is-invalid" if form.algorithm.errors else "")) }}
+                        {% if form.algorithm.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.algorithm.errors %}{{ error }}{% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">
+                            Select the encryption algorithm to secure this financial report.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-primary btn-lg") }}
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-calculate net profit and variance
+document.addEventListener('DOMContentLoaded', function() {
+    const revenue = document.getElementById('total_revenue');
+    const expenses = document.getElementById('total_expenses');
+    const netProfit = document.getElementById('net_profit');
+    
+    const allocated = document.getElementById('budget_allocated');
+    const spent = document.getElementById('budget_spent');
+    const variance = document.getElementById('variance');
+    
+    function calculateNetProfit() {
+        if (revenue.value && expenses.value) {
+            netProfit.value = (parseFloat(revenue.value) - parseFloat(expenses.value)).toFixed(2);
+        }
+    }
+    
+    function calculateVariance() {
+        if (allocated.value && spent.value) {
+            variance.value = (parseFloat(allocated.value) - parseFloat(spent.value)).toFixed(2);
+        }
+    }
+    
+    revenue.addEventListener('input', calculateNetProfit);
+    expenses.addEventListener('input', calculateNetProfit);
+    allocated.addEventListener('input', calculateVariance);
+    spent.addEventListener('input', calculateVariance);
+});
+</script>
+{% endblock %}

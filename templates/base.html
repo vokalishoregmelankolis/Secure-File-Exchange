@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SECURE FILE EXCHANGE - VALORANT EDITION{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+</head>
+<body>
+    <!-- VALORANT-STYLE NAVIGATION -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">
+                <i class="bi bi-shield-lock"></i> SECURE VAULT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.dashboard') }}">
+                                <i class="bi bi-speedometer2"></i> DASHBOARD
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.upload') }}">
+                                <i class="bi bi-cloud-upload"></i> UPLOAD FILE
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.financial_report') }}">
+                                <i class="bi bi-file-earmark-text"></i> REPORTS
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.performance') }}">
+                                <i class="bi bi-graph-up"></i> PERFORMANCE
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.shared_files') }}">
+                                <i class="bi bi-share"></i> SHARED FILES
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle"></i> {{ current_user.username|upper }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" style="background: rgba(30, 35, 40, 0.95); border: 1px solid var(--valorant-accent);">
+                                <li><a class="dropdown-item" href="{{ url_for('main.logout') }}" style="color: var(--valorant-red);">
+                                    <i class="bi bi-box-arrow-right"></i> LOGOUT
+                                </a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.login') }}">
+                                <i class="bi bi-box-arrow-in-right"></i> LOGIN
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.register') }}">
+                                <i class="bi bi-person-plus"></i> REGISTER
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="container my-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- VALORANT-STYLE FOOTER -->
+    <footer style="background: var(--valorant-bg-secondary); border-top: 2px solid var(--valorant-red); padding: 2rem 0; margin-top: 3rem;">
+        <div class="container">
+            <!-- Team Info -->
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h5 style="color: var(--valorant-red); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;">
+                        <i class="fas fa-users"></i> TEAM BAKSO KAMIL
+                    </h5>
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 mb-3">
+                            <div class="team-member" style="background: rgba(255, 70, 84, 0.1); border: 1px solid rgba(255, 70, 84, 0.3); border-radius: 8px; padding: 1rem;">
+                                <p class="mb-1" style="color: var(--text-primary); font-weight: 600;">Nadief Aqila Rabbani</p>
+                                <p class="mb-0" style="color: var(--valorant-accent-blue); font-family: 'Courier New', monospace; font-size: 0.9rem;">5025231128</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="team-member" style="background: rgba(0, 245, 255, 0.1); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 8px; padding: 1rem;">
+                                <p class="mb-1" style="color: var(--text-primary); font-weight: 600;">Agym Kamil Ramadhan</p>
+                                <p class="mb-0" style="color: var(--valorant-accent-blue); font-family: 'Courier New', monospace; font-size: 0.9rem;">5025231186</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="team-member" style="background: rgba(0, 212, 170, 0.1); border: 1px solid rgba(0, 212, 170, 0.3); border-radius: 8px; padding: 1rem;">
+                                <p class="mb-1" style="color: var(--text-primary); font-weight: 600;">Muhammad Rizal Hafiyyan</p>
+                                <p class="mb-0" style="color: var(--valorant-accent-blue); font-family: 'Courier New', monospace; font-size: 0.9rem;">5025231212</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- App Info -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-2" style="font-family: 'Inter', sans-serif; color: var(--valorant-accent-blue); font-weight: 600;">
+                        &copy; 2025 SECURE VAULT - ENCRYPTED FILE SHARING PLATFORM
+                    </p>
+                    <p class="mb-0" style="color: var(--text-secondary);">
+                        <small>
+                            <i class="fas fa-shield-alt"></i> 
+                            SECURED WITH: <span style="color: var(--valorant-red);">AES-256</span> | 
+                            <span style="color: var(--valorant-accent-blue);">DES</span> | 
+                            <span style="color: var(--valorant-green);">RC4</span> ENCRYPTION
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main_valorant.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

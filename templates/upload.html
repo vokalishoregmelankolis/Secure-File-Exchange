@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Upload File - Secure File Exchange System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-cloud-upload"></i> Upload and Encrypt File</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> <strong>Supported Files:</strong> Excel (.xlsx, .xls), Images (.jpg, .jpeg, .png, .gif), PDF (.pdf)
+                    <br>
+                    <i class="bi bi-shield-lock"></i> <strong>Encryption:</strong> Your file will be encrypted using the selected algorithm before storage.
+                </div>
+                
+                <form method="POST" enctype="multipart/form-data" action="{{ url_for('main.upload') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-4">
+                        {{ form.file.label(class="form-label") }}
+                        {{ form.file(class="form-control " + ("is-invalid" if form.file.errors else "")) }}
+                        {% if form.file.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.file.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">Maximum file size: 16 MB</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        {{ form.algorithm.label(class="form-label") }}
+                        {{ form.algorithm(class="form-select " + ("is-invalid" if form.algorithm.errors else "")) }}
+                        {% if form.algorithm.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.algorithm.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">
+                            <strong>AES-256:</strong> Advanced Encryption Standard with 256-bit key (Most Secure)<br>
+                            <strong>DES:</strong> Data Encryption Standard with 56-bit effective key<br>
+                            <strong>RC4:</strong> Stream cipher with variable key size
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-primary btn-lg") }}
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card shadow mt-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-download"></i> Financial Report Template</h5>
+            </div>
+            <div class="card-body">
+                <p>Use our standardized template for financial reports:</p>
+                <a href="{{ url_for('main.download_template') }}" class="btn btn-info">
+                    <i class="bi bi-download"></i> Download Excel Template
+                </a>
+                <p class="mt-3 mb-0"><small class="text-muted">Or create a report directly using the form: 
+                    <a href="{{ url_for('main.financial_report') }}">Create Financial Report</a>
+                </small></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

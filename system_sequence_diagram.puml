@@ -1,0 +1,106 @@
+@startuml system_sequence_diagram
+!theme plain
+skinparam participant {
+  BackgroundColor lightblue
+  BorderColor black
+}
+skinparam sequence {
+  ArrowColor red
+  LifeLineBorderColor blue
+}
+
+actor User as U
+participant "Web Interface" as W
+participant "Flask App" as F
+participant "Crypto Utils" as C
+participant "Database" as D
+participant "File System" as FS
+
+title File Upload and Encryption Sequence
+
+== User Registration/Login ==
+U -> W: Register/Login
+W -> F: POST /register or /login
+F -> D: Create/Verify User
+D -> F: User object
+F -> W: Session created
+W -> U: Dashboard access
+
+== File Upload Process ==
+U -> W: Select file + algorithm
+W -> F: POST /upload (multipart/form-data)
+activate F
+
+F -> F: Validate file type & size
+F -> C: Generate encryption key
+activate C
+C -> C: Create random key + IV
+C -> F: Key material
+deactivate C
+
+F -> C: Encrypt file content
+activate C
+C -> C: Apply algorithm (AES/DES/RC4)
+C -> FS: Save encrypted file
+FS -> C: File path
+C -> F: Encrypted file info
+deactivate C
+
+F -> D: Store file metadata
+activate D
+D -> D: Insert EncryptedFile record
+D -> F: File ID
+deactivate D
+
+F -> D: Log upload operation
+D -> D: Insert EncryptionLog
+F -> W: Success response
+deactivate F
+W -> U: Upload confirmation
+
+== File Sharing Process ==
+U -> W: Share file with user
+W -> F: POST /share
+F -> D: Check file ownership
+D -> F: Owner verification
+F -> D: Create SharedFile record
+D -> F: Share ID
+F -> D: Log share operation
+F -> W: Share success
+W -> U: Share confirmation
+
+== File Download Process ==
+U -> W: Request file download
+W -> F: GET /download/<file_id>
+F -> D: Check access permissions
+D -> F: Permission granted
+
+F -> FS: Read encrypted file
+FS -> F: Encrypted content
+F -> C: Decrypt file
+activate C
+C -> C: Apply decryption algorithm
+C -> F: Decrypted content
+deactivate C
+
+F -> D: Log download operation
+F -> D: Store performance metrics
+F -> W: Decrypted file
+W -> U: File download
+
+== Performance Analytics ==
+F -> D: Query PerformanceMetric
+D -> F: Metrics data
+F -> F: Calculate statistics
+F -> W: Performance dashboard
+W -> U: Analytics view
+
+note over U, FS
+**Security Features:**
+- All operations logged
+- Encryption keys stored securely
+- Access control enforced
+- Performance monitoring
+end note
+
+@enduml

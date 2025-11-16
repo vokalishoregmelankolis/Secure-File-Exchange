@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Login - SECURE VAULT{% endblock %}
+
+{% block content %}
+<div class="valorant-auth-container">
+    <div class="valorant-auth-card">
+        <!-- Auth Header -->
+        <div class="auth-header">
+            <div class="auth-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h2 class="auth-title">USER LOGIN</h2>
+            <p class="auth-subtitle">SECURE VAULT ACCESS</p>
+        </div>
+
+        <!-- Auth Form -->
+        <div class="auth-form-container">
+            <form method="POST" action="{{ url_for('main.login') }}" class="valorant-form">
+                {{ form.hidden_tag() }}
+                
+                <div class="valorant-input-group">
+                    <label class="valorant-label">
+                        <i class="fas fa-user"></i>
+                        USERNAME
+                    </label>
+                    {{ form.username(class="valorant-input " + ("valorant-input-error" if form.username.errors else ""), 
+                                   placeholder="Enter your username") }}
+                    {% if form.username.errors %}
+                        <div class="valorant-error">
+                            {% for error in form.username.errors %}
+                                <i class="fas fa-exclamation-triangle"></i> {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="valorant-input-group">
+                    <label class="valorant-label">
+                        <i class="fas fa-lock"></i>
+                        PASSWORD
+                    </label>
+                    {{ form.password(class="valorant-input " + ("valorant-input-error" if form.password.errors else ""), 
+                                   placeholder="Enter your password") }}
+                    {% if form.password.errors %}
+                        <div class="valorant-error">
+                            {% for error in form.password.errors %}
+                                <i class="fas fa-exclamation-triangle"></i> {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="auth-actions">
+                    {{ form.submit(class="btn btn-valorant-primary btn-auth", value="LOGIN") }}
+                </div>
+            </form>
+        </div>
+
+        <!-- Auth Footer -->
+        <div class="auth-footer">
+            <div class="auth-divider">
+                <span>NEW USER</span>
+            </div>
+            <p class="auth-register">
+                Don't have an account? 
+                <a href="{{ url_for('main.register') }}" class="valorant-link">
+                    <i class="fas fa-user-plus"></i> REGISTER HERE
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Background Effects -->
+    <div class="auth-bg-effects">
+        <div class="grid-overlay"></div>
+        <div class="glow-effect"></div>
+    </div>
+</div>
+{% endblock %}

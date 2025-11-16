@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}SECURE VAULT - CLASSIFIED INTEL EXCHANGE{% endblock %}
+
+{% block content %}
+<!-- VALORANT-STYLE HERO SECTION -->
+<div class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <i class="bi bi-shield-shaded glow-blue"></i><br>
+                        SECURE VAULT
+                    </h1>
+                    <p class="hero-subtitle">
+                        SECURE FILE SHARING PLATFORM<br>
+                        <span style="color: var(--valorant-accent);">AES-256 | DES | RC4</span> ENCRYPTION SUPPORT
+                    </p>
+                    <div class="mt-5">
+                        {% if not current_user.is_authenticated %}
+                            <a class="btn btn-danger btn-lg me-3" href="{{ url_for('main.register') }}" role="button">
+                                <i class="bi bi-person-plus"></i> GET STARTED
+                            </a>
+                            <a class="btn btn-primary btn-lg" href="{{ url_for('main.login') }}" role="button">
+                                <i class="bi bi-box-arrow-in-right"></i> LOGIN
+                            </a>
+                        {% else %}
+                            <a class="btn btn-primary btn-lg" href="{{ url_for('main.dashboard') }}" role="button">
+                                <i class="bi bi-speedometer2"></i> GO TO DASHBOARD
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES SECTION -->
+<div class="container mt-5 pt-5">
+    <div class="row text-center mb-5">
+        <div class="col-12">
+            <h2 style="font-family: 'Inter', sans-serif; color: var(--valorant-accent-blue); text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">
+                <i class="bi bi-info-circle glow-blue"></i> WHY CHOOSE SECURE VAULT
+            </h2>
+            <p style="color: var(--text-secondary); font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+                Advanced encryption technology to protect your sensitive files. 
+                Share confidential documents securely with other users through our encrypted platform.
+            </p>
+        </div>
+    </div>
+
+<!-- FEATURES GRID -->
+<div class="row mt-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-shield-lock-fill glow-red" style="font-size: 3.5rem; color: var(--valorant-red);"></i>
+                <h5 class="card-title mt-3" style="color: var(--valorant-red); text-transform: uppercase; letter-spacing: 1px;">STRONG ENCRYPTION</h5>
+                <p class="card-text">Military-grade encryption protocols: <strong>AES-256</strong>, <strong>DES</strong>, and <strong>RC4</strong> with CBC mode for maximum security classification.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-broadcast glow-blue" style="font-size: 3.5rem; color: var(--valorant-blue);"></i>
+                <h5 class="card-title mt-3" style="color: var(--valorant-blue); text-transform: uppercase; letter-spacing: 1px;">SECURE COMMS</h5>
+                <p class="card-text">Deploy encrypted intelligence to authorized agents through secure communication channels with full operational control.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-cpu-fill glow-accent" style="font-size: 3.5rem; color: var(--valorant-accent);"></i>
+                <h5 class="card-title mt-3" style="color: var(--valorant-accent); text-transform: uppercase; letter-spacing: 1px;">PERFORMANCE METRICS</h5>
+                <p class="card-text">Real-time analysis of encryption algorithms performance across different data classifications and payload types.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- OPERATIONAL CAPABILITIES -->
+<div class="row mt-5">
+    <div class="col-lg-12">
+        <h2 class="text-center mb-5" style="font-family: 'Orbitron', monospace; color: var(--valorant-accent); text-transform: uppercase; letter-spacing: 2px;">
+            <i class="bi bi-gear-fill glow-accent"></i> TACTICAL CAPABILITIES
+        </h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card" style="background: rgba(15, 20, 25, 0.6); border: 1px solid var(--valorant-red);">
+                    <div class="card-header" style="background: rgba(255, 70, 84, 0.1); border-bottom: 1px solid var(--valorant-red);">
+                        <i class="bi bi-shield-fill-check glow-red"></i> SECURITY PROTOCOLS
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-arrow-right-square-fill" style="color: var(--valorant-green);"></i> Agent Authentication System</li>
+                            <li class="mb-2"><i class="bi bi-arrow-right-square-fill" style="color: var(--valorant-green);"></i> Military-grade Password Encryption</li>
+                            <li class="mb-2"><i class="bi bi-arrow-right-square-fill" style="color: var(--valorant-green);"></i> Multi-format Intel Processing</li>
+                            <li class="mb-2"><i class="bi bi-arrow-right-square-fill" style="color: var(--valorant-green);"></i> Triple Encryption Protocol</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" style="background: rgba(15, 20, 25, 0.6); border: 1px solid var(--valorant-blue);">
+                    <div class="card-header" style="background: rgba(0, 212, 255, 0.1); border-bottom: 1px solid var(--valorant-blue);">
+                        <i class="bi bi-cpu glow-blue"></i> ADVANCED SYSTEMS
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-arrow-right-square-fill" style="color: var(--valorant-green);"></i> CBC Mode Quantum Encryption</li>
+                            <li class="mb-2"><i class="bi bi-arrow-right-square-fill" style="color: var(--valorant-green);"></i> Secure Database Vault</li>
+                            <li class="mb-2"><i class="bi bi-arrow-right-square-fill" style="color: var(--valorant-green);"></i> Authorized Intel Distribution</li>
+                            <li class="mb-2"><i class="bi bi-arrow-right-square-fill" style="color: var(--valorant-green);"></i> Real-time Performance Analytics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MISSION BRIEFING -->
+<div class="row mt-5 mb-5">
+    <div class="col-lg-12">
+        <div class="alert" style="background: rgba(83, 232, 255, 0.1); border: none; border-left: 4px solid var(--valorant-accent);">
+            <h5 style="color: var(--valorant-accent); text-transform: uppercase; letter-spacing: 1px;">
+                <i class="bi bi-broadcast glow-accent"></i> CLASSIFIED MISSION BRIEFING
+            </h5>
+            <p class="mb-0" style="color: var(--text-secondary);">
+                This <strong>Secure Vault System</strong> is designed for high-level organizations requiring 
+                <span style="color: var(--valorant-red);">classified financial intelligence</span> exchange between departments 
+                and external consultants. All intel is encrypted using <span style="color: var(--valorant-blue);">military-standard algorithms</span> 
+                before vault storage, with access controlled through <span style="color: var(--valorant-accent);">multi-layer authentication protocols</span>.
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

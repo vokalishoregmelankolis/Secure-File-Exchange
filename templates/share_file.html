@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Share File - Secure File Exchange System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-warning">
+                <h4 class="mb-0"><i class="bi bi-share"></i> Share File</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> Share <strong>{{ file.original_filename }}</strong> with another registered user.
+                </div>
+                
+                <form method="POST" action="{{ url_for('main.share_file', file_id=file.file_id) }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.recipient_username.label(class="form-label") }}
+                        {{ form.recipient_username(class="form-control " + ("is-invalid" if form.recipient_username.errors else ""), placeholder="Enter username") }}
+                        {% if form.recipient_username.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.recipient_username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">Enter the username of the person you want to share this file with.</div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <small>
+                            <i class="bi bi-exclamation-triangle"></i> 
+                            The recipient will be able to view and download this file. 
+                            The encryption key will be available to them for decryption.
+                        </small>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-warning") }}
+                        <a href="{{ url_for('main.file_detail', file_id=file.file_id) }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
