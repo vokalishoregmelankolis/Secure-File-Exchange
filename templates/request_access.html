@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Request Access - SECURE VAULT{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card" style="background: var(--valorant-bg-secondary); border: 1px solid var(--valorant-accent);">
+                <div class="card-header" style="background: rgba(255, 70, 84, 0.1); border-bottom: 1px solid var(--valorant-red);">
+                    <h3 style="color: var(--valorant-red); margin: 0;">
+                        <i class="bi bi-key"></i> REQUEST FILE ACCESS
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <!-- File Information -->
+                    <div class="mb-4 p-3" style="background: rgba(0, 245, 255, 0.05); border-left: 3px solid var(--valorant-accent-blue); border-radius: 4px;">
+                        <h5 style="color: var(--valorant-accent-blue); margin-bottom: 1rem;">
+                            <i class="bi bi-file-earmark-lock"></i> File Details
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+                                    <strong>File Name:</strong>
+                                </p>
+                                <p style="color: var(--text-primary); margin-bottom: 1rem;">
+                                    {{ file.original_filename }}
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+                                    <strong>Owner:</strong>
+                                </p>
+                                <p style="color: var(--text-primary); margin-bottom: 1rem;">
+                                    {{ file.owner.username }}
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+                                    <strong>Algorithm:</strong>
+                                </p>
+                                <p style="margin-bottom: 1rem;">
+                                    <span class="badge" style="background: var(--valorant-red);">{{ file.algorithm }}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+                                    <strong>Uploaded:</strong>
+                                </p>
+                                <p style="color: var(--text-primary); margin-bottom: 1rem;">
+                                    {{ file.uploaded_at.strftime('%Y-%m-%d %H:%M') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Request Form -->
+                    <form method="POST" action="{{ url_for('main.request_access', file_id=file.id) }}">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.message.label(class="form-label", style="color: var(--text-primary); font-weight: 600;") }}
+                            {{ form.message(class="form-control", rows="4", placeholder="Optional: Add a message to the organization explaining why you need access...", style="background: var(--valorant-bg-primary); color: var(--text-primary); border: 1px solid var(--valorant-accent);") }}
+                            {% if form.message.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.message.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-lg", style="background: var(--valorant-red); color: white; border: none; font-weight: 700; text-transform: uppercase;") }}
+                            <a href="{{ url_for('main.view_organizations') }}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to Organizations
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

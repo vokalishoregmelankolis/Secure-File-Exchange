@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Performance Comparison - Secure File Exchange System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="valorant-section-card">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    ENCRYPTION PERFORMANCE COMPARISON
+                    <span class="section-subtitle">ALGORITHM PERFORMANCE ANALYTICS</span>
+                </div>
+            </div>
+            <div class="section-content">
+                <p class="valorant-description">Compare encryption and decryption performance across AES, DES, and RC4 algorithms.</p>
+                
+                {% if metrics %}
+                    <div class="valorant-table-container mt-4">
+                        <table class="valorant-table">
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-shield-alt"></i> ALGORITHM</th>
+                                    <th><i class="fas fa-cogs"></i> OPERATION</th>
+                                    <th><i class="fas fa-database"></i> DATA TYPE</th>
+                                    <th><i class="fas fa-stopwatch"></i> EXECUTION TIME</th>
+                                    <th><i class="fas fa-download"></i> INPUT SIZE</th>
+                                    <th><i class="fas fa-upload"></i> OUTPUT SIZE</th>
+                                    <th><i class="fas fa-chart-bar"></i> SIZE OVERHEAD</th>
+                                    <th><i class="fas fa-calendar"></i> TIMESTAMP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for metric in metrics %}
+                                <tr>
+                                    <td>
+                                        <span class="valorant-badge valorant-badge-{{ 'secure' if metric.algorithm == 'AES' else 'standard' if metric.algorithm == 'DES' else 'basic' }}">
+                                            {{ metric.algorithm }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="valorant-badge valorant-badge-{{ 'success' if metric.operation == 'encryption' else 'danger' }}">
+                                            <i class="fas fa-{{ 'lock' if metric.operation == 'encryption' else 'unlock' }}"></i>
+                                            {{ metric.operation.upper() }}
+                                        </span>
+                                    </td>
+                                    <td>{{ metric.data_type }}</td>
+                                    <td class="valorant-time"><strong>{{ format_time(metric.execution_time) }}</strong></td>
+                                    <td class="valorant-size">{{ format_size(metric.input_size) }}</td>
+                                    <td class="valorant-size">{{ format_size(metric.output_size) }}</td>
+                                    <td class="valorant-overhead">
+                                        {% if metric.output_size > metric.input_size %}
+                                            <span class="valorant-overhead-positive">+{{ format_size(metric.output_size - metric.input_size) }}</span>
+                                        {% else %}
+                                            <span class="valorant-overhead-neutral">{{ format_size(metric.output_size - metric.input_size) }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="valorant-timestamp">{{ metric.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="row mt-5">
+                        <div class="col-lg-12">
+                            <h5 class="valorant-section-subtitle">
+                                <i class="fas fa-trophy"></i>
+                                PERFORMANCE SUMMARY BY ALGORITHM
+                            </h5>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        {% for algo in ['AES', 'DES', 'RC4'] %}
+                        <div class="col-md-4">
+                            <div class="valorant-performance-card valorant-card-{{ algo.lower() }}">
+                                <div class="performance-card-header">
+                                    <div class="algo-icon">
+                                        <i class="fas fa-{{ 'shield-alt' if algo == 'AES' else 'lock' if algo == 'DES' else 'key' }}"></i>
+                                    </div>
+                                    <h6 class="algo-name">{{ algo }}</h6>
+                                    <span class="algo-security">
+                                        {{ 'MAXIMUM SECURITY' if algo == 'AES' else 'STANDARD SECURITY' if algo == 'DES' else 'FAST PROCESSING' }}
+                                    </span>
+                                </div>
+                                <div class="performance-card-body">
+                                    <div class="performance-metric">
+                                        <div class="metric-header">
+                                            <i class="fas fa-lock"></i>
+                                            <span>ENCRYPTION</span>
+                                        </div>
+                                        {% set enc_metrics = performance_data[algo]['encryption'] %}
+                                        {% if enc_metrics %}
+                                            <div class="metric-data">
+                                                <div class="metric-item">
+                                                    <span class="metric-label">Operations:</span>
+                                                    <span class="metric-value">{{ enc_metrics|length }}</span>
+                                                </div>
+                                                <div class="metric-item">
+                                                    <span class="metric-label">Avg Time:</span>
+                                                    <span class="metric-value">{{ format_time((enc_metrics|sum(attribute='execution_time')) / enc_metrics|length) }}</span>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="metric-no-data">
+                                                <i class="fas fa-database"></i>
+                                                <span>No data</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="performance-metric">
+                                        <div class="metric-header">
+                                            <i class="fas fa-unlock"></i>
+                                            <span>DECRYPTION</span>
+                                        </div>
+                                        {% set dec_metrics = performance_data[algo]['decryption'] %}
+                                        {% if dec_metrics %}
+                                            <div class="metric-data">
+                                                <div class="metric-item">
+                                                    <span class="metric-label">Operations:</span>
+                                                    <span class="metric-value">{{ dec_metrics|length }}</span>
+                                                </div>
+                                                <div class="metric-item">
+                                                    <span class="metric-label">Avg Time:</span>
+                                                    <span class="metric-value">{{ format_time((dec_metrics|sum(attribute='execution_time')) / dec_metrics|length) }}</span>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="metric-no-data">
+                                                <i class="fas fa-database"></i>
+                                                <span>No data</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="valorant-alert valorant-alert-info mt-4">
+                        <div class="alert-header">
+                            <i class="fas fa-info-circle"></i>
+                            <h6>PERFORMANCE ANALYSIS NOTES</h6>
+                        </div>
+                        <div class="valorant-analysis-list">
+                            <div class="analysis-item">
+                                <div class="analysis-label">AES-256</div>
+                                <div class="analysis-desc">Generally faster for larger files, most secure, industry standard encryption algorithm</div>
+                            </div>
+                            <div class="analysis-item">
+                                <div class="analysis-label">DES</div>
+                                <div class="analysis-desc">Faster for small files, but considered less secure due to 56-bit key limitation</div>
+                            </div>
+                            <div class="analysis-item">
+                                <div class="analysis-label">RC4</div>
+                                <div class="analysis-desc">Stream cipher optimized for continuous data, but has known security vulnerabilities</div>
+                            </div>
+                            <div class="analysis-item">
+                                <div class="analysis-label">SIZE OVERHEAD</div>
+                                <div class="analysis-desc">Block ciphers (AES, DES) require padding which increases file size slightly</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% else %}
+                    <div class="valorant-empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="empty-title">NO PERFORMANCE METRICS AVAILABLE</div>
+                        <div class="empty-description">
+                            Upload and encrypt some files to see performance data and analysis.
+                        </div>
+                        <a href="{{ url_for('main.upload') }}" class="valorant-cta-btn">
+                            <i class="fas fa-upload"></i>
+                            UPLOAD FILE
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

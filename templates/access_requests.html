@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}Access Requests - SECURE FILE EXCHANGE{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4" style="color: var(--valorant-red); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                <i class="bi bi-inbox"></i> ACCESS REQUESTS
+            </h1>
+            <p class="lead" style="color: var(--text-secondary);">
+                Manage access requests from consultants for your encrypted files
+            </p>
+        </div>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="btn-group" role="group" aria-label="Status filter">
+                <a href="{{ url_for('main.view_access_requests', status='all') }}" 
+                   class="btn {% if status_filter == 'all' %}btn-danger{% else %}btn-outline-danger{% endif %}">
+                    <i class="bi bi-list"></i> All
+                </a>
+                <a href="{{ url_for('main.view_access_requests', status='pending') }}" 
+                   class="btn {% if status_filter == 'pending' %}btn-danger{% else %}btn-outline-danger{% endif %}">
+                    <i class="bi bi-clock"></i> Pending
+                </a>
+                <a href="{{ url_for('main.view_access_requests', status='approved') }}" 
+                   class="btn {% if status_filter == 'approved' %}btn-success{% else %}btn-outline-success{% endif %}">
+                    <i class="bi bi-check-circle"></i> Approved
+                </a>
+                <a href="{{ url_for('main.view_access_requests', status='denied') }}" 
+                   class="btn {% if status_filter == 'denied' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">
+                    <i class="bi bi-x-circle"></i> Denied
+                </a>
+                <a href="{{ url_for('main.view_access_requests', status='revoked') }}" 
+                   class="btn {% if status_filter == 'revoked' %}btn-warning{% else %}btn-outline-warning{% endif %}">
+                    <i class="bi bi-slash-circle"></i> Revoked
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Requests List -->
+    {% if requests %}
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover" style="background: rgba(30, 35, 40, 0.95); border: 1px solid var(--valorant-accent);">
+                    <thead style="background: rgba(255, 70, 84, 0.2); border-bottom: 2px solid var(--valorant-red);">
+                        <tr>
+                            <th><i class="bi bi-person"></i> Consultant</th>
+                            <th><i class="bi bi-file-earmark-lock"></i> File</th>
+                            <th><i class="bi bi-info-circle"></i> Status</th>
+                            <th><i class="bi bi-calendar"></i> Requested</th>
+                            <th><i class="bi bi-calendar-check"></i> Processed</th>
+                            <th><i class="bi bi-gear"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for req in requests %}
+                        <tr>
+                            <td>
+                                <strong style="color: var(--valorant-accent-blue);">
+                                    {{ req.consultant.username }}
+                                </strong>
+                                <span class="badge" style="background: linear-gradient(135deg, #00f5ff 0%, #00d4aa 100%); padding: 0.25rem 0.5rem; font-size: 0.65rem; margin-left: 0.5rem;">
+                                    <i class="bi bi-person-badge"></i> CONSULTANT
+                                </span>
+                                <br>
+                                <small style="color: var(--text-secondary);">
+                                    {{ req.consultant.email }}
+                                </small>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-primary);">
+                                    {{ req.file.original_filename }}
+                                </strong>
+                                <br>
+                                <small style="color: var(--text-secondary);">
+                                    {{ format_size(req.file.file_size) }} | {{ req.file.algorithm }}
+                                </small>
+                            </td>
+                            <td>
+                                {% if req.status == 'pending' %}
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-clock"></i> Pending
+                                </span>
+                                {% elif req.status == 'approved' %}
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle"></i> Approved
+                                </span>
+                                {% elif req.status == 'denied' %}
+                                <span class="badge bg-secondary">
+                                    <i class="bi bi-x-circle"></i> Denied
+                                </span>
+                                {% elif req.status == 'revoked' %}
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-slash-circle"></i> Revoked
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td style="color: var(--text-secondary);">
+                                {{ req.requested_at.strftime('%Y-%m-%d %H:%M') }}
+                            </td>
+                            <td style="color: var(--text-secondary);">
+                                {% if req.processed_at %}
+                                {{ req.processed_at.strftime('%Y-%m-%d %H:%M') }}
+                                {% else %}
+                                <span style="color: var(--text-muted);">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if req.status == 'pending' %}
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <form method="POST" action="{{ url_for('main.approve_request', request_id=req.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-success" title="Approve Request" onclick="return confirm('Are you sure you want to approve this access request?');">
+                                            <i class="bi bi-check-lg"></i> Approve
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('main.deny_request', request_id=req.id) }}" style="display: inline;">
+                                        <button type="submit" class="btn btn-danger" title="Deny Request" onclick="return confirm('Are you sure you want to deny this access request?');">
+                                            <i class="bi bi-x-lg"></i> Deny
+                                        </button>
+                                    </form>
+                                </div>
+                                {% elif req.status == 'approved' %}
+                                <form method="POST" action="{{ url_for('main.revoke_access', request_id=req.id) }}" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-warning" title="Revoke Access" onclick="return confirm('Are you sure you want to revoke access for this consultant?');">
+                                        <i class="bi bi-slash-circle"></i> Revoke
+                                    </button>
+                                </form>
+                                {% else %}
+                                <span style="color: var(--text-muted);">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info" style="background: rgba(0, 245, 255, 0.1); border: 1px solid rgba(0, 245, 255, 0.3); color: var(--valorant-accent-blue);">
+                <i class="bi bi-info-circle"></i>
+                {% if status_filter == 'all' %}
+                No access requests found for your files.
+                {% else %}
+                No {{ status_filter }} access requests found for your files.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Back Button -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table-dark {
+        --bs-table-bg: rgba(30, 35, 40, 0.95);
+        --bs-table-hover-bg: rgba(255, 70, 84, 0.1);
+    }
+    
+    .btn-group .btn {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.85rem;
+    }
+    
+    .table td, .table th {
+        vertical-align: middle;
+        padding: 1rem;
+    }
+    
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+</style>
+{% endblock %}

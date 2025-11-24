@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}My Access Requests - SECURE FILE EXCHANGE{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4" style="color: var(--valorant-red); font-weight: 700; text-transform: uppercase;">
+                <i class="bi bi-inbox"></i> MY ACCESS REQUESTS
+            </h1>
+            <p class="lead" style="color: var(--text-secondary);">
+                View the status of all your file access requests
+            </p>
+        </div>
+    </div>
+
+    {% if requests %}
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover" style="background: var(--valorant-bg-secondary); border: 1px solid var(--valorant-accent);">
+                        <thead style="background: rgba(255, 70, 84, 0.2); border-bottom: 2px solid var(--valorant-red);">
+                            <tr>
+                                <th><i class="bi bi-file-earmark"></i> FILE NAME</th>
+                                <th><i class="bi bi-building"></i> ORGANIZATION</th>
+                                <th><i class="bi bi-info-circle"></i> STATUS</th>
+                                <th><i class="bi bi-calendar"></i> REQUESTED</th>
+                                <th><i class="bi bi-calendar-check"></i> PROCESSED</th>
+                                <th><i class="bi bi-gear"></i> ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in requests %}
+                            <tr>
+                                <td>
+                                    <strong style="color: var(--valorant-accent-blue);">
+                                        {{ request.file.original_filename }}
+                                    </strong>
+                                    <br>
+                                    <small style="color: var(--text-secondary);">
+                                        {{ format_size(request.file.file_size) }} | {{ request.file.algorithm }}
+                                    </small>
+                                </td>
+                                <td>
+                                    <i class="bi bi-person-badge"></i> {{ request.organization.username }}
+                                </td>
+                                <td>
+                                    {% if request.status == 'pending' %}
+                                        <span class="badge" style="background: rgba(255, 165, 0, 0.2); color: #FFA500; border: 1px solid #FFA500;">
+                                            <i class="bi bi-clock"></i> PENDING
+                                        </span>
+                                    {% elif request.status == 'approved' %}
+                                        <span class="badge" style="background: rgba(0, 212, 170, 0.2); color: var(--valorant-green); border: 1px solid var(--valorant-green);">
+                                            <i class="bi bi-check-circle"></i> APPROVED
+                                        </span>
+                                    {% elif request.status == 'denied' %}
+                                        <span class="badge" style="background: rgba(255, 70, 84, 0.2); color: var(--valorant-red); border: 1px solid var(--valorant-red);">
+                                            <i class="bi bi-x-circle"></i> DENIED
+                                        </span>
+                                    {% elif request.status == 'revoked' %}
+                                        <span class="badge" style="background: rgba(128, 128, 128, 0.2); color: #888; border: 1px solid #888;">
+                                            <i class="bi bi-slash-circle"></i> REVOKED
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <small style="color: var(--text-secondary);">
+                                        {{ request.requested_at.strftime('%Y-%m-%d %H:%M') }}
+                                    </small>
+                                </td>
+                                <td>
+                                    {% if request.processed_at %}
+                                        <small style="color: var(--text-secondary);">
+                                            {{ request.processed_at.strftime('%Y-%m-%d %H:%M') }}
+                                        </small>
+                                    {% else %}
+                                        <small style="color: var(--text-secondary);">
+                                            -
+                                        </small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if request.status == 'approved' %}
+                                        <a href="{{ url_for('main.file_detail', file_id=request.file.file_id) }}" 
+                                           class="btn btn-sm" 
+                                           style="background: var(--valorant-accent-blue); color: white; border: none;">
+                                            <i class="bi bi-eye"></i> VIEW FILE
+                                        </a>
+                                    {% elif request.status == 'pending' %}
+                                        <span class="text-muted" style="font-size: 0.85rem;">
+                                            <i class="bi bi-hourglass-split"></i> Awaiting approval
+                                        </span>
+                                    {% elif request.status == 'denied' %}
+                                        <span class="text-muted" style="font-size: 0.85rem;">
+                                            <i class="bi bi-x"></i> Request denied
+                                        </span>
+                                    {% elif request.status == 'revoked' %}
+                                        <span class="text-muted" style="font-size: 0.85rem;">
+                                            <i class="bi bi-ban"></i> Access revoked
+                                        </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="card" style="background: rgba(255, 165, 0, 0.1); border: 1px solid #FFA500;">
+                    <div class="card-body text-center">
+                        <h3 style="color: #FFA500;">
+                            {{ requests | selectattr('status', 'equalto', 'pending') | list | length }}
+                        </h3>
+                        <p class="mb-0" style="color: var(--text-secondary);">PENDING</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" style="background: rgba(0, 212, 170, 0.1); border: 1px solid var(--valorant-green);">
+                    <div class="card-body text-center">
+                        <h3 style="color: var(--valorant-green);">
+                            {{ requests | selectattr('status', 'equalto', 'approved') | list | length }}
+                        </h3>
+                        <p class="mb-0" style="color: var(--text-secondary);">APPROVED</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" style="background: rgba(255, 70, 84, 0.1); border: 1px solid var(--valorant-red);">
+                    <div class="card-body text-center">
+                        <h3 style="color: var(--valorant-red);">
+                            {{ requests | selectattr('status', 'equalto', 'denied') | list | length }}
+                        </h3>
+                        <p class="mb-0" style="color: var(--text-secondary);">DENIED</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" style="background: rgba(128, 128, 128, 0.1); border: 1px solid #888;">
+                    <div class="card-body text-center">
+                        <h3 style="color: #888;">
+                            {{ requests | selectattr('status', 'equalto', 'revoked') | list | length }}
+                        </h3>
+                        <p class="mb-0" style="color: var(--text-secondary);">REVOKED</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-12">
+                <div class="alert" style="background: rgba(255, 165, 0, 0.1); border: 1px solid #FFA500; color: var(--text-primary);">
+                    <h4><i class="bi bi-info-circle"></i> No Access Requests</h4>
+                    <p class="mb-0">
+                        You haven't submitted any access requests yet. 
+                        <a href="{{ url_for('main.view_organizations') }}" style="color: var(--valorant-accent-blue);">
+                            Browse organizations
+                        </a> to request access to their files.
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <a href="{{ url_for('main.view_organizations') }}" class="btn" style="background: var(--valorant-accent-blue); color: white; border: none;">
+                <i class="bi bi-building"></i> BROWSE ORGANIZATIONS
+            </a>
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> BACK TO DASHBOARD
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

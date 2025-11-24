@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}USER PROFILE - {{ current_user.username|upper }}{% endblock %}
+
+{% block content %}
+<!-- PROFILE HEADER -->
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 style="font-family: 'Inter', sans-serif; color: var(--valorant-accent-blue); text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">
+                <i class="bi bi-person-circle glow-blue"></i> USER PROFILE
+                {% if user.role.value == 'organization' %}
+                <span class="badge" style="background: linear-gradient(135deg, #ff4654 0%, #ff1744 100%); padding: 0.5rem 1rem; font-size: 0.8rem; margin-left: 1rem;">
+                    <i class="bi bi-building"></i> ORGANIZATION
+                </span>
+                {% elif user.role.value == 'consultant' %}
+                <span class="badge" style="background: linear-gradient(135deg, #00f5ff 0%, #00d4aa 100%); padding: 0.5rem 1rem; font-size: 0.8rem; margin-left: 1rem;">
+                    <i class="bi bi-person-badge"></i> CONSULTANT
+                </span>
+                {% endif %}
+            </h2>
+            <p style="color: var(--text-secondary); font-size: 1.1rem;">
+                View your account information and encryption keys
+            </p>
+        </div>
+    </div>
+
+    <!-- PROFILE INFORMATION -->
+    <div class="row mt-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="valorant-section-card">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fas fa-user"></i>
+                        <span>ACCOUNT INFORMATION</span>
+                        <span class="section-subtitle">USER DETAILS</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <div class="profile-info-grid">
+                        <!-- Username -->
+                        <div class="profile-info-item">
+                            <div class="profile-label">
+                                <i class="bi bi-person"></i> USERNAME
+                            </div>
+                            <div class="profile-value">
+                                {{ user.username }}
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="profile-info-item">
+                            <div class="profile-label">
+                                <i class="bi bi-envelope"></i> EMAIL
+                            </div>
+                            <div class="profile-value">
+                                {{ user.email }}
+                            </div>
+                        </div>
+
+                        <!-- Role -->
+                        <div class="profile-info-item">
+                            <div class="profile-label">
+                                <i class="bi bi-shield-check"></i> ROLE
+                            </div>
+                            <div class="profile-value">
+                                <span class="valorant-badge valorant-badge-{{ 'secure' if user.role.value == 'organization' else 'standard' }}">
+                                    {{ user.role.value.upper() }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Account Created -->
+                        <div class="profile-info-item">
+                            <div class="profile-label">
+                                <i class="bi bi-calendar-check"></i> ACCOUNT CREATED
+                            </div>
+                            <div class="profile-value">
+                                {{ user.created_at.strftime('%B %d, %Y at %H:%M') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENCRYPTION KEY INFORMATION -->
+    <div class="row mt-4">
+        <div class="col-lg-8 mx-auto">
+            <div class="valorant-section-card">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fas fa-key"></i>
+                        <span>ENCRYPTION KEYS</span>
+                        <span class="section-subtitle">RSA KEY PAIR INFORMATION</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    {% if user.public_key %}
+                    <div class="profile-info-grid">
+                        <!-- Public Key Fingerprint -->
+                        <div class="profile-info-item">
+                            <div class="profile-label">
+                                <i class="bi bi-fingerprint"></i> PUBLIC KEY FINGERPRINT
+                            </div>
+                            <div class="profile-value" style="font-family: 'Courier New', monospace; word-break: break-all;">
+                                {{ user.public_key_fingerprint }}
+                            </div>
+                        </div>
+
+                        <!-- Key Generation Date -->
+                        <div class="profile-info-item">
+                            <div class="profile-label">
+                                <i class="bi bi-clock-history"></i> KEY GENERATED
+                            </div>
+                            <div class="profile-value">
+                                {{ user.key_generated_at.strftime('%B %d, %Y at %H:%M') }}
+                            </div>
+                        </div>
+
+                        <!-- Key Algorithm -->
+                        <div class="profile-info-item">
+                            <div class="profile-label">
+                                <i class="bi bi-cpu"></i> ALGORITHM
+                            </div>
+                            <div class="profile-value">
+                                <span class="valorant-badge valorant-badge-secure">RSA-2048</span>
+                            </div>
+                        </div>
+
+                        <!-- Key Status -->
+                        <div class="profile-info-item">
+                            <div class="profile-label">
+                                <i class="bi bi-check-circle"></i> STATUS
+                            </div>
+                            <div class="profile-value">
+                                <span style="color: var(--valorant-green);">
+                                    <i class="bi bi-shield-check"></i> ACTIVE
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Future Enhancement Notice -->
+                    <div class="mt-4 p-3" style="background: rgba(255, 70, 84, 0.1); border-left: 3px solid var(--valorant-red); border-radius: 4px;">
+                        <p style="color: var(--text-secondary); margin: 0;">
+                            <i class="bi bi-info-circle"></i> 
+                            <strong>Note:</strong> Key regeneration feature will be available in a future update.
+                        </p>
+                    </div>
+                    {% else %}
+                    <div class="valorant-empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h4 class="empty-title">NO ENCRYPTION KEYS</h4>
+                        <p class="empty-message">Your account does not have encryption keys generated yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.profile-info-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.profile-info-item {
+    padding: 1rem;
+    background: rgba(0, 245, 255, 0.05);
+    border-left: 3px solid var(--valorant-accent-blue);
+    border-radius: 4px;
+}
+
+.profile-label {
+    color: var(--valorant-accent-blue);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.profile-value {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+</style>
+{% endblock %}

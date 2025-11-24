@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Cryptographic Operation Logs{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Cryptographic Operation Logs</h2>
+    <p class="text-muted">View all cryptographic operations performed in the system</p>
+    
+    <!-- Filters -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="GET" action="{{ url_for('main.view_crypto_logs') }}" class="row g-3">
+                <div class="col-md-4">
+                    <label for="operation" class="form-label">Operation</label>
+                    <select class="form-select" id="operation" name="operation">
+                        <option value="all" {% if operation_filter == 'all' %}selected{% endif %}>All Operations</option>
+                        {% for op in operations %}
+                        <option value="{{ op }}" {% if operation_filter == op %}selected{% endif %}>{{ op }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="success" class="form-label">Status</label>
+                    <select class="form-select" id="success" name="success">
+                        <option value="all" {% if success_filter == 'all' %}selected{% endif %}>All</option>
+                        <option value="success" {% if success_filter == 'success' %}selected{% endif %}>Success</option>
+                        <option value="failure" {% if success_filter == 'failure' %}selected{% endif %}>Failure</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="user_id" class="form-label">User ID</label>
+                    <input type="text" class="form-control" id="user_id" name="user_id" 
+                           value="{{ user_filter or '' }}" placeholder="Filter by user ID">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    <a href="{{ url_for('main.view_crypto_logs') }}" class="btn btn-secondary">Clear Filters</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Logs Table -->
+    <div class="card">
+        <div class="card-body">
+            {% if logs %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>User</th>
+                            <th>Operation</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                            <th>IP Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs %}
+                        <tr class="{% if not log.success %}table-danger{% endif %}">
+                            <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            <td>
+                                {% if log.user %}
+                                    {{ log.user.username }} (ID: {{ log.user_id }})
+                                {% else %}
+                                    User ID: {{ log.user_id }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge bg-info">{{ log.operation }}</span>
+                            </td>
+                            <td>
+                                {% if log.success %}
+                                    <span class="badge bg-success">Success</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Failure</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="text-truncate" style="max-width: 300px;" title="{{ log.details or 'N/A' }}">
+                                    {{ log.details or 'N/A' }}
+                                </div>
+                                {% if log.error_message %}
+                                <div class="text-danger small mt-1">
+                                    <strong>Error:</strong> {{ log.error_message }}
+                                </div>
+                                {% endif %}
+                            </td>
+                            <td>{{ log.ip_address or 'N/A' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-muted mt-3">Showing most recent 100 logs</p>
+            {% else %}
+            <div class="alert alert-info">
+                No cryptographic operation logs found matching the selected filters.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
