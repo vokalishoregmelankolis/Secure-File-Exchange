@@ -12,6 +12,23 @@ import os
 from io import BytesIO
 from datetime import datetime
 from sqlalchemy import or_
+from urllib.parse import urlparse
+
+
+def is_safe_url(target):
+    """Check if URL is safe for redirect (local URL only).
+    
+    Prevents open redirect vulnerabilities by ensuring the target URL
+    has no scheme or netloc (i.e., is a relative path).
+    """
+    if not target:
+        return False
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(target)
+    # Allow only URLs with no scheme and no netloc (relative paths)
+    # or URLs that match our host
+    return (test_url.scheme in ('', 'http', 'https') and 
+            (test_url.netloc == '' or test_url.netloc == ref_url.netloc))
 
 main = Blueprint('main', __name__)
 
@@ -156,7 +173,10 @@ def login():
                 login_user(user)
                 flash('Login successful!', 'success')
                 next_page = request.args.get('next')
-                return redirect(next_page) if next_page else redirect(url_for('main.dashboard'))
+                # Validate next URL to prevent open redirect vulnerabilities
+                if next_page and is_safe_url(next_page):
+                    return redirect(next_page)
+                return redirect(url_for('main.dashboard'))
             else:
                 flash('Invalid username or password.', 'danger')
         else:
