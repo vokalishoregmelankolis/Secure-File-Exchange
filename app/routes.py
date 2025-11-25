@@ -19,16 +19,23 @@ def is_safe_url(target):
     """Check if URL is safe for redirect (local URL only).
     
     Prevents open redirect vulnerabilities by ensuring the target URL
-    has no scheme or netloc (i.e., is a relative path).
+    is either a relative path (no scheme/netloc) or matches our host exactly.
     """
     if not target:
         return False
     ref_url = urlparse(request.host_url)
     test_url = urlparse(target)
-    # Allow only URLs with no scheme and no netloc (relative paths)
-    # or URLs that match our host
-    return (test_url.scheme in ('', 'http', 'https') and 
-            (test_url.netloc == '' or test_url.netloc == ref_url.netloc))
+    
+    # Relative paths (no scheme and no netloc) are always safe
+    if test_url.scheme == '' and test_url.netloc == '':
+        return True
+    
+    # For absolute URLs, require exact host match including port
+    # and only allow HTTP/HTTPS schemes
+    if test_url.scheme not in ('http', 'https'):
+        return False
+    
+    return test_url.netloc == ref_url.netloc
 
 main = Blueprint('main', __name__)
 
