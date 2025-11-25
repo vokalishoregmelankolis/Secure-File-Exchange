@@ -50,15 +50,6 @@ python migrations/apply_mongodb_fix.py
 migrations\fix_mongodb.bat
 ```
 
-### Solution 4: Modify Connection String (TEMPORARY - Development Only)
-
-Add `tlsAllowInvalidCertificates=true` to your `.env` file:
-
-```env
-# In .env file - ONLY FOR DEVELOPMENT/TESTING
-MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/?appName=Cluster0&tlsAllowInvalidCertificates=true
-```
-
 ⚠️ **WARNING**: This disables certificate validation. Only use for testing!
 
 ### Solution 5: Use Local MongoDB (RECOMMENDED for Development)
